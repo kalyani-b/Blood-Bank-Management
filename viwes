@@ -1,0 +1,27 @@
+VIEWS:
+
+ CREATE VIEW users_vu AS SELECT User_Id, Status_Id, Address_Id, Phone_No, Password FROM Users;  Create VIEW find_Universal_donors AS SELECT Blood_code, donor.First_Name, donor.Last_Name FROM Blood_Type, donor WHERE Blood_Type.Blood_Id = donor.Blood_Id and Blood_code = 'O'
+
+ Create VIEW find_all_universal_receivers AS SELECT Blood_code, recipient.First_Name, recipient.Last_Name FROM Blood_Type, recipient WHERE Blood_Type.Blood_Id = recipient.Blood_Id and Blood_code = 'AB'
+
+ CREATE VIEW find_all_receiver_contact_info AS SELECT distinct recipient.First_Name, recipient.Last_Name, Users.phone_no, address.city FROM Users, recipient, address WHERE Users.user_Id = recipient.recipient_Id or Users.user_id = address.Address_Id  Create view final_all_donor_contact_info as select distinct donor.First_Name, donor.Last_Name, Users.phone_no, address.city from Users, donor, address where Users.user_Id = donor.donor_id or Users.user_id = address.Address_Id
+
+ Create view find_all_blood_bank_contact_info as select distinct Blood_bank.Name, Users.phone_no, address.city from Users, blood_bank, address where Users.user_Id = blood_bank.bank_id or Users.user_id = address.Address_Id
+
+Procedures:
+
+CREATE PROCEDURE SelectUsers AS SELECT * FROM Users GO;
+
+Exec SelectUsers
+
+Joins:
+
+SELECT Users.User_Id, Users.Status_Id FROM Users INNER JOIN Status ON Users.Status_Id=Status.Status_Id
+
+RETRIVAL OF DATA:
+
+Select Phone_No,Status_Id from Users where Address_Id>1000001;
+
+UPDATE: UPDATE Blood_Bank SET Name = 'Afifa' WHERE Bank_id=1; DELETE:
+
+DELETE FROM Donor WHERE First_Name='Akbg';
