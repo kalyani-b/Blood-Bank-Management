@@ -1,0 +1,75 @@
+USE  DonorSystem;
+CREATE TABLE Address ( Address_Id numeric NOT NULL, City varchar (20) NOT NULL,
+District varchar (20) NOT NULL, 
+Neighborhood varchar (60) NOT NULL,
+PRIMARY KEY (Address_Id)
+);
+
+CREATE TABLE Status 
+( Status_Id numeric NOT NULL, 
+Status varchar (20) NOT NULL,
+PRIMARY KEY (Status_Id) );
+
+CREATE TABLE Users ( User_Id numeric NOT NULL, 
+Status_Id numeric NOT NULL,
+Address_Id numeric NOT NULL,
+Phone_No varchar(10) NOT NULL,
+Password varchar(45) NOT NULL, PRIMARY KEY (User_Id),
+FOREIGN KEY (Status_Id) REFERENCES Status (Status_Id),
+FOREIGN KEY (Address_Id) REFERENCES Address (Address_Id), );
+
+CREATE TABLE Blood_Type 
+( Blood_Id numeric NOT NULL,
+Blood_Code varchar (5) NOT NULL, 
+Donates_to varchar (45) NOT NULL, 
+Receives_from varchar (45) NOT NULL,
+PRIMARY KEY (Blood_Id)
+);
+
+ CREATE TABLE Donor ( Donor_Id numeric NOT NULL,
+ First_Name varchar (20) NOT NULL, Last_Name varchar (20) NOT NULL,
+ Blood_Id numeric NOT NULL, PRIMARY KEY (Donor_Id),
+ FOREIGN KEY (Donor_Id) REFERENCES Users (User_Id),
+ FOREIGN KEY (Blood_Id) REFERENCES Blood_Type (Blood_Id), ); 
+
+  CREATE TABLE Medical_Info 
+  ( Report_Id numeric NOT NULL, Donor_Id numeric NOT NULL, 
+  Date date NOT NULL, Result varchar (50) NOT NULL,
+  PRIMARY KEY (Report_Id),
+  FOREIGN KEY (Donor_Id) REFERENCES Donor (Donor_Id), ); 
+
+
+ CREATE TABLE Recipient 
+ ( Recipient_Id numeric NOT NULL,
+ First_Name varchar (20) NOT NULL,
+ Last_Name varchar (20) NOT NULL,
+ Blood_Id numeric NOT NULL,
+ PRIMARY KEY (Recipient_Id), 
+ FOREIGN KEY (Recipient_Id) REFERENCES Users (User_Id), 
+ FOREIGN KEY (Blood_Id) REFERENCES Blood_Type (Blood_Id), );
+ 
+ 
+ 
+ CREATE TABLE Blood_Bank
+ ( Bank_Id numeric NOT NULL, 
+ Name varchar (50) NOT NULL, 
+ Capacity numeric NOT NULL, 
+ PRIMARY KEY (Bank_Id), 
+ FOREIGN KEY (Bank_Id) REFERENCES Users (User_Id), );
+
+ CREATE TABLE Gives_to 
+ ( Donation_id numeric NOT NULL,
+ Donor_id numeric NOT NULL,
+ Bank_Id numeric NOT NULL,
+ Date date NOT NULL, Amount numeric NOT NULL,
+ PRIMARY KEY (Donation_id), 
+ FOREIGN KEY (Donor_Id) REFERENCES Donor (Donor_Id), 
+ FOREIGN KEY (Bank_Id) REFERENCES Blood_Bank (Bank_Id), );
+
+  CREATE TABLE Takes_From 
+  ( Transfer_Id numeric NOT NULL, 
+  Recipient_id numeric NOT NULL, Bank_Id numeric NOT NULL, 
+  Date date NOT NULL,
+  Amount numeric NOT NULL, PRIMARY KEY (Transfer_Id), 
+  FOREIGN KEY (Recipient_Id) REFERENCES Recipient (Recipient_Id),
+  FOREIGN KEY (Bank_Id) REFERENCES Blood_Bank (Bank_Id), );
