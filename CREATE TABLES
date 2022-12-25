@@ -73,3 +73,15 @@ PRIMARY KEY (Blood_Id)
   Amount numeric NOT NULL, PRIMARY KEY (Transfer_Id), 
   FOREIGN KEY (Recipient_Id) REFERENCES Recipient (Recipient_Id),
   FOREIGN KEY (Bank_Id) REFERENCES Blood_Bank (Bank_Id), );
+  
+  
+select * from Status ;
+select * from Address ;
+select * from Users;
+select * from Blood_Type;
+select * from Donor;
+select * from Medical_Info;
+select * from Recipient ;
+  select * from  Blood_Bank ;  
+select * from  Gives_to ;
+select * from Takes_From ;
